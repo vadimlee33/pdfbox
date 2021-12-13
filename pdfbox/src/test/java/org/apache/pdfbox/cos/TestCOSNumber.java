@@ -77,7 +77,12 @@ abstract class TestCOSNumber extends TestCOSBase
             // but obviously there some
             assertNotNull(COSNumber.get("-2e-006"));
             assertNotNull(COSNumber.get("-8e+05"));
-
+            //86 line
+            assertThrows(IOException.class, () -> COSNumber.get("++"));
+            assertThrows(IOException.class, () -> COSNumber.get("-+"));
+            //92 & 93 lines
+            COSNumber actualGetResult = COSNumber.get("");
+            assertSame(((COSInteger) actualGetResult).OUT_OF_RANGE_MAX, actualGetResult);
             assertThrows(NullPointerException.class, () -> {
                     COSNumber.get(null);
             });
